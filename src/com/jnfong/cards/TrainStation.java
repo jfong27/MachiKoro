@@ -2,18 +2,25 @@ package com.jnfong.cards;
 
 public class TrainStation extends Landmark {
 
-   private int price = 4;
-
-   public int getPrice() { return price; }
+   private static final int PRICE = 4;
+   private static final int ID = 15;
+   private static final CardIcon ICON = CardIcon.MAJOR;
 
    @Override
-   public boolean isActivated(int rollNumber, int playerId) {
-      return false;
+   public int getPrice() {
+      return PRICE;
    }
 
    @Override
    public int getId() {
-      return 15;
+      return ID;
    }
+
+   @Override
+   public boolean isActivated(int rollNumber, int playerId) {
+      return true;
+   }
+
+
 }
 

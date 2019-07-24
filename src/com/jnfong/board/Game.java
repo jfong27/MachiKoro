@@ -1,9 +1,7 @@
 package com.jnfong.board;
 
-import com.jnfong.Player;
+import com.jnfong.player.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Game {
@@ -12,6 +10,7 @@ public class Game {
     private int numPlayers;
     private static final int NUM_CARD_TYPES = 15;
     private static final int MAX_PLAYERS = 4;
+    public static final int NUM_LANDMARKS = 4;
 
 
     public Game(int numPlayers) {
@@ -29,6 +28,11 @@ public class Game {
 
     }
 
+    /*
+     * Game has a field of cards that can be purchased.
+     * It consists of 15 stacks of different cards. Each stack
+     * has the same cards.
+     */
     private void initializeCardStacks() {
         System.out.println("Initializing buyable card decks...");
         for (int i = 0; i < NUM_CARD_TYPES; i++) {
@@ -54,7 +58,7 @@ public class Game {
                 System.out.println("Would you like to roll 1 or 2 dice?");
             }
             System.out.println("Player " + playerTurn + " rolled a " + rollOne);
-            
+
             playerTurn += 1;
             if (playerTurn == numPlayers) { playerTurn = 0; }
             count += 1;

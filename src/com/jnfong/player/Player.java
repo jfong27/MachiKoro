@@ -1,5 +1,6 @@
-package com.jnfong;
+package com.jnfong.player;
 
+import com.jnfong.board.Game;
 import com.jnfong.cards.Bakery;
 import com.jnfong.cards.Card;
 import com.jnfong.cards.WheatField;
@@ -12,11 +13,11 @@ public class Player {
    private int id;
    private int coins;
    private List<Card> cards;
-   private boolean hasTrainStation;
+   private boolean[] landmarks;
 
    public Player(int id) {
       this.id = id;
-      hasTrainStation = false;
+      landmarks = new boolean[Game.NUM_LANDMARKS];
       coins = 3;
       cards = new ArrayList<>();
       cards.add(new WheatField());
@@ -28,7 +29,19 @@ public class Player {
    }
 
    public boolean hasTrainStation() {
-      return hasTrainStation;
+      return landmarks[0];
+   }
+
+   public boolean hasShoppingMall() {
+      return landmarks[1];
+   }
+
+   public boolean hasAmusementPark() {
+      return landmarks[2];
+   }
+
+   public boolean hasRadioTower() {
+      return landmarks[3];
    }
 
 }

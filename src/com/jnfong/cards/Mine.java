@@ -2,20 +2,23 @@ package com.jnfong.cards;
 
 public class Mine extends PrimaryIndustry {
 
+    private static final int PRICE = 6;
+    private static final int ID = 3;
+    private static final CardIcon ICON = CardIcon.GEAR;
+
     @Override
     public int getPrice() {
-        return 6;
+        return PRICE;
     }
 
     @Override
     public int getId() {
-        return 3;
+        return ID;
     }
 
     @Override
     public boolean isActivated(int rollNumber, int playerId) {
-        if (rollNumber == 9) { return true; }
-        return false;
+        return rollNumber == 9;
     }
 
     public String toString() {

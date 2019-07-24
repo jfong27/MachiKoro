@@ -2,20 +2,23 @@ package com.jnfong.cards;
 
 public class WheatField extends PrimaryIndustry {
 
+    private static final int PRICE = 1;
+    private static final int ID = 0;
+    private static final CardIcon ICON = CardIcon.WHEAT;
+
     @Override
     public int getPrice() {
-        return 1;
+        return PRICE;
     }
 
     @Override
     public int getId() {
-        return 0;
+        return ID;
     }
 
     @Override
     public boolean isActivated(int rollNumber, int playerId) {
-        if (rollNumber == 1) { return true; }
-        return false;
+        return rollNumber == 1;
     }
 
     public String toString() {

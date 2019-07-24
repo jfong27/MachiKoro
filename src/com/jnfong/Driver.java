@@ -14,8 +14,5 @@ public class Driver {
         int numPlayers = scanner.nextInt();
         game = new Game(numPlayers);
         game.playGame();
-
-
-
     }
 }

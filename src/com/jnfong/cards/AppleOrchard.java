@@ -1,20 +1,24 @@
 package com.jnfong.cards;
 
 public class AppleOrchard extends PrimaryIndustry {
+
+    private static final int PRICE = 3;
+    private static final int ID = 4;
+    private static final CardIcon ICON = CardIcon.WHEAT;
+
     @Override
     public int getPrice() {
-        return 3;
+        return PRICE;
     }
 
     @Override
     public int getId() {
-        return 4;
+        return ID;
     }
 
     @Override
     public boolean isActivated(int rollNumber, int playerId) {
-        if (rollNumber == 10) { return true; }
-        return false;
+        return rollNumber == 10;
     }
 
     public String toString() {
