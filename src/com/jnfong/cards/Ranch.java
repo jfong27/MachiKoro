@@ -4,6 +4,7 @@ public class Ranch extends PrimaryIndustry {
 
     private static final int PRICE = 1;
     private static final int ID = 1;
+    private static final int ACTIVATION_NUM = 2;
     private static final CardIcon ICON = CardIcon.COW;
 
     @Override
@@ -17,8 +18,8 @@ public class Ranch extends PrimaryIndustry {
     }
 
     @Override
-    public boolean isActivated(int rollNumber, int playerId) {
-        return rollNumber == 2;
+    public boolean isActivated(int rollNumber) {
+        return rollNumber == ACTIVATION_NUM;
     }
 
     public String toString() { return "Ranch"; }

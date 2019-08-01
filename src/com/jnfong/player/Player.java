@@ -1,9 +1,7 @@
 package com.jnfong.player;
 
 import com.jnfong.board.Game;
-import com.jnfong.cards.Bakery;
-import com.jnfong.cards.Card;
-import com.jnfong.cards.WheatField;
+import com.jnfong.cards.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +10,34 @@ public class Player {
 
    private int id;
    private int coins;
-   private List<Card> cards;
+   private List<Restaurant> redCards;
+   private List<PrimaryIndustry> blueCards;
+   private List<Card> purpleGreenCards;
    private boolean[] landmarks;
 
    public Player(int id) {
       this.id = id;
-      landmarks = new boolean[Game.NUM_LANDMARKS];
       coins = 3;
-      cards = new ArrayList<>();
-      cards.add(new WheatField());
-      cards.add(new Bakery());
+      redCards = new ArrayList<>();
+      blueCards = new ArrayList<>();
+      purpleGreenCards = new ArrayList<>();
+      landmarks = new boolean[Game.NUM_LANDMARKS];
+
+      blueCards.add(new WheatField());
+      purpleGreenCards.add(new Bakery());
+
    }
+
+   public void takeCoins(int amount) {
+      coins -= amount;
+      if (coins < 0) {
+         coins = 0;
+      }
+   }
+
+   public void giveCoins(int amount) { coins += amount; }
+
+   public int getNumCoins() { return coins; }
 
    public String toString() {
       return "Player " + id;
@@ -42,6 +57,36 @@ public class Player {
 
    public boolean hasRadioTower() {
       return landmarks[3];
+   }
+
+   public int activateRed(int roll) {
+
+      int coinsToSteal = 0;
+
+      for (Restaurant restaurant : redCards) {
+         if (restaurant.isActivated(roll)) {
+            coinsToSteal += restaurant.coinsToSteal();
+         }
+      }
+
+      return coinsToSteal;
+
+   }
+
+   public void activateBlue(int roll) {
+      for (PrimaryIndustry card : blueCards) {
+         if (card.isActivated(roll)) {
+            coins += card.getPayout();
+         }
+      }
+   }
+
+   public void activatePurpleGreen(int roll) {
+      for (Card card : purpleGreenCards) {
+         if (card.isActivated(roll)) {
+            // TODO: ACTIVATE PG CARDS
+         }
+      }
    }
 
 }

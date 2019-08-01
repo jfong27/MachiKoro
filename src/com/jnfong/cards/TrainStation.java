@@ -17,10 +17,9 @@ public class TrainStation extends Landmark {
    }
 
    @Override
-   public boolean isActivated(int rollNumber, int playerId) {
+   public boolean isActivated(int rollNum) {
       return true;
    }
-
 
 }
 

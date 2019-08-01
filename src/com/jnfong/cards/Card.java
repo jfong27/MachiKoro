@@ -4,5 +4,5 @@ public interface Card {
    int getPrice();
    int getId();
    int getInitAmount();
-   boolean isActivated(int rollNumber, int playerId);
+   boolean isActivated(int rollNum);
 }

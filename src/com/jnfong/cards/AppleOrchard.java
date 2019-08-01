@@ -4,6 +4,8 @@ public class AppleOrchard extends PrimaryIndustry {
 
     private static final int PRICE = 3;
     private static final int ID = 4;
+    private static final int ACTIVATION_NUM = 10;
+    private static final int PAYOUT = 3;
     private static final CardIcon ICON = CardIcon.WHEAT;
 
     @Override
@@ -17,9 +19,10 @@ public class AppleOrchard extends PrimaryIndustry {
     }
 
     @Override
-    public boolean isActivated(int rollNumber, int playerId) {
-        return rollNumber == 10;
-    }
+    public boolean isActivated(int rollNum) { return rollNum == ACTIVATION_NUM; }
+
+    @Override
+    public int getPayout() { return PAYOUT; }
 
     public String toString() {
         return "Apple Orchard";

@@ -1,11 +1,11 @@
 package com.jnfong.cards;
 
-public class Forest extends PrimaryIndustry {
+public class Cafe extends Restaurant {
 
-    private static final int PRICE = 3;
-    private static final int ID = 2;
-    private static final int ACTIVATION_NUM = 5;
-    private static final CardIcon ICON = CardIcon.GEAR;
+    private static final int PRICE = 2;
+    private static final int ID = 10;
+    private static final int ACTIVATION_NUM = 3;
+    private static final CardIcon ICON = CardIcon.CUP;
 
     @Override
     public int getPrice() {
@@ -23,6 +23,6 @@ public class Forest extends PrimaryIndustry {
     }
 
     public String toString() {
-        return "Forest";
+        return "Wheat Field";
     }
 }

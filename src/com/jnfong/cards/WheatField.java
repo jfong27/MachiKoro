@@ -4,7 +4,9 @@ public class WheatField extends PrimaryIndustry {
 
     private static final int PRICE = 1;
     private static final int ID = 0;
+    private static final int ACTIVATION_NUM = 1;
     private static final CardIcon ICON = CardIcon.WHEAT;
+
 
     @Override
     public int getPrice() {
@@ -17,8 +19,8 @@ public class WheatField extends PrimaryIndustry {
     }
 
     @Override
-    public boolean isActivated(int rollNumber, int playerId) {
-        return rollNumber == 1;
+    public boolean isActivated(int rollNum) {
+        return rollNum == ACTIVATION_NUM;
     }
 
     public String toString() {
