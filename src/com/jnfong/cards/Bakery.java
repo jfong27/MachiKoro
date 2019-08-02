@@ -4,7 +4,6 @@ public class Bakery extends SecondaryIndustry {
 
     private static final int PRICE = 1;
     private static final int ID = 5;
-    private static final int ACTIVATION_NUM = 1;
     private static final CardIcon ICON = CardIcon.BREAD;
 
     @Override
@@ -15,8 +14,11 @@ public class Bakery extends SecondaryIndustry {
     @Override
     public int getId() { return ID; }
 
+    @Override
+    public CardIcon getIcon() { return ICON; }
+
     public boolean isActivated(int rollNumber) {
-        return rollNumber == ACTIVATION_NUM;
+        return rollNumber == 1 || rollNumber == 2;
     }
 
     public String toString() {

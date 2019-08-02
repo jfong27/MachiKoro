@@ -1,22 +1,23 @@
 package com.jnfong.board;
 
+import com.jnfong.cards.Card;
 import com.jnfong.player.Player;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
     private Player[] players;
     private CardStack[] cardStacks;
     private int numPlayers;
     private static final int NUM_CARD_TYPES = 15;
-    private static final int MAX_PLAYERS = 4;
     public static final int NUM_LANDMARKS = 4;
 
 
     public Game(int numPlayers) {
         this.numPlayers = numPlayers;
 
-        players = new Player[MAX_PLAYERS];
+        players = new Player[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(i);
@@ -36,7 +37,7 @@ public class Game {
     private void initializeCardStacks() {
         System.out.println("Initializing buyable card decks...");
         for (int i = 0; i < NUM_CARD_TYPES; i++) {
-            cardStacks[0] = new CardStack(i);
+            cardStacks[i] = new CardStack(i);
         }
 
     }
@@ -55,16 +56,17 @@ public class Game {
         int count = 0;
 
         while (true) {
-            System.out.println("Player " + playerTurn + "'s turn");
+            System.out.println("\nPlayer " + playerTurn + "'s turn");
             currPlayer = players[playerTurn];
             roll = random.nextInt(6) + 1;
 
             if (currPlayer.hasTrainStation()) {
                 System.out.println("Would you like to roll 1 or 2 dice?");
-                roll += 1; // TODO: Change to actual roll
+                roll += 0; // TODO: Change to actual roll
             }
             System.out.println("Player " + playerTurn + " rolled a " + roll);
             activateCards(playerTurn, roll);
+            allowPurchase(currPlayer);
 
             playerTurn += 1;
             if (playerTurn == numPlayers) { playerTurn = 0; }
@@ -84,20 +86,27 @@ public class Game {
             player.activateBlue(roll);
         }
 
-        currPlayer.activatePurpleGreen(roll);
+        currPlayer.activateGreen(roll);
+        currPlayer.activatePurple(roll);
     }
 
     private void activateRedCards(int currPlayerIndex, int roll) {
 
         Player currOpponent;
         Player currPlayer = players[currPlayerIndex];
-        int opponentSteals = 0;
+        int opponentSteals;
         int oppIndex = currPlayerIndex - 1;
+
+        if (oppIndex < 0) {
+            oppIndex = players.length - 1;
+        }
 
         do {
             currOpponent = players[oppIndex];
             opponentSteals = currOpponent.activateRed(roll);
-            transferCoins(currPlayer, currOpponent, opponentSteals);
+            if (opponentSteals > 0) {
+                transferCoins(currPlayer, currOpponent, opponentSteals);
+            }
             oppIndex -= 1;
             if (oppIndex < 0) {
                 oppIndex = players.length - 1;
@@ -106,17 +115,43 @@ public class Game {
 
     }
 
-
-
     private void transferCoins(Player from, Player to, int amount) {
 
         if (amount > from.getNumCoins()) {
             amount = from.getNumCoins();
         }
-        System.out.println(String.format("Player %s takes %d coins from Player %s",
-                                         to.toString(), amount, from.toString()));
-        from.takeCoins(amount);
-        to.giveCoins(amount);
+
+        if (amount > 0) {
+            System.out.println(String.format("%s takes %d coins from %s",
+                                             to.toString(), amount, from.toString()));
+            from.takeCoins(amount);
+            to.giveCoins(amount);
+        }
+    }
+
+    private void allowPurchase(Player player) {
+
+        System.out.println(String.format("%s: %d coins", player.toString(), player.getNumCoins()));
+        System.out.println("Would you like to make a purchase? (y/n)");
+        Scanner scanner = new Scanner(System.in);
+        String ans = scanner.next();
+
+        int i = 0;
+        int purchaseId;
+        if (ans.toLowerCase().charAt(0) == 'y') {
+            for (CardStack cardStack : cardStacks) {
+                System.out.print(i++ + " - ");
+                System.out.println(cardStack.toString());
+            }
+            System.out.print(">> ");
+            purchaseId = scanner.nextInt();
+            if (player.getNumCoins() >= cardStacks[purchaseId].getCardType().getPrice()) {
+                Card newCard = cardStacks[purchaseId].getCard();
+                player.giveCard(newCard);
+                player.takeCoins(newCard.getPrice());
+            }
+        }
+
     }
 
 }

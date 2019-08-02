@@ -19,6 +19,9 @@ public class WheatField extends PrimaryIndustry {
     }
 
     @Override
+    public CardIcon getIcon() { return ICON; }
+
+    @Override
     public boolean isActivated(int rollNum) {
         return rollNum == ACTIVATION_NUM;
     }

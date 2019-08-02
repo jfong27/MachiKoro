@@ -12,7 +12,8 @@ public class Player {
    private int coins;
    private List<Restaurant> redCards;
    private List<PrimaryIndustry> blueCards;
-   private List<Card> purpleGreenCards;
+   private List<SecondaryIndustry> greenCards;
+   private List<MajorEstablishment> purpleCards;
    private boolean[] landmarks;
 
    public Player(int id) {
@@ -20,11 +21,12 @@ public class Player {
       coins = 3;
       redCards = new ArrayList<>();
       blueCards = new ArrayList<>();
-      purpleGreenCards = new ArrayList<>();
+      greenCards = new ArrayList<>();
+      purpleCards = new ArrayList<>();
       landmarks = new boolean[Game.NUM_LANDMARKS];
 
       blueCards.add(new WheatField());
-      purpleGreenCards.add(new Bakery());
+      greenCards.add(new Bakery());
 
    }
 
@@ -36,6 +38,18 @@ public class Player {
    }
 
    public void giveCoins(int amount) { coins += amount; }
+
+   public void giveCard(Card card) {
+      if (Restaurant.class.isAssignableFrom(card.getClass())) {
+         redCards.add((Restaurant)card);
+      } else if (PrimaryIndustry.class.isAssignableFrom(card.getClass())) {
+         blueCards.add((PrimaryIndustry)card);
+      } else if (SecondaryIndustry.class.isAssignableFrom(card.getClass())) {
+         greenCards.add((SecondaryIndustry)card);
+      } else {
+         purpleCards.add((MajorEstablishment)card);
+      }
+   }
 
    public int getNumCoins() { return coins; }
 
@@ -76,15 +90,26 @@ public class Player {
    public void activateBlue(int roll) {
       for (PrimaryIndustry card : blueCards) {
          if (card.isActivated(roll)) {
+            System.out.println(String.format("%s gets %d coins because of %s",
+                                             this.toString(), card.getPayout(), card.toString()));
             coins += card.getPayout();
          }
       }
    }
 
-   public void activatePurpleGreen(int roll) {
-      for (Card card : purpleGreenCards) {
+   public void activateGreen(int roll) {
+      for (SecondaryIndustry card : greenCards) {
          if (card.isActivated(roll)) {
-            // TODO: ACTIVATE PG CARDS
+            coins += card.getPayout(blueCards);
+         }
+      }
+   }
+
+   //TODO: Implement
+   public void activatePurple(int roll) {
+      for (MajorEstablishment card : purpleCards) {
+         if (card.isActivated(roll)) {
+            System.out.println(card.toString() + "IS ACTIVATED");
          }
       }
    }

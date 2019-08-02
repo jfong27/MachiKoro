@@ -23,6 +23,6 @@ public class Cafe extends Restaurant {
     }
 
     public String toString() {
-        return "Wheat Field";
+        return "Cafe";
     }
 }

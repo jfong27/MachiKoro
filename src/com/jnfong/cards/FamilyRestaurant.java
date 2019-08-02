@@ -27,6 +27,6 @@ public class FamilyRestaurant extends Restaurant {
     public int coinsToSteal() { return COINS_TO_STEAL; }
 
     public String toString() {
-        return "Wheat Field";
+        return "Family Restaurant";
     }
 }

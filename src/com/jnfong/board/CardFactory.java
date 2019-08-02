@@ -19,10 +19,6 @@ import com.jnfong.cards.*;
         12 - Stadium
         13 - TV Station
         14 - Business Center
-        15 - Train Station
-        16 - Shopping Mall
-        17 - Amusement Park
-        18 - Radio Tower
  */
 public class CardFactory {
 
@@ -40,6 +36,24 @@ public class CardFactory {
                 return new AppleOrchard();
             case 5:
                 return new Bakery();
+            case 6:
+                return new ConvenienceStore();
+            case 7:
+                return new CheeseFactory();
+            case 8:
+                return new FurnitureFactory();
+            case 9:
+                return new FruitVegetableMarket();
+            case 10:
+                return new Cafe();
+            case 11:
+                return new FamilyRestaurant();
+            case 12:
+                return new Stadium();
+            case 13:
+                return new TvStation();
+            case 14:
+                return new BusinessCenter();
             default:
                 return new WheatField();
         }

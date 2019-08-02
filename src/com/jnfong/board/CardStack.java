@@ -9,11 +9,22 @@ public class CardStack {
     private int amountRemaining;
 
     public CardStack(int cardId) {
-        System.out.println("Initializing CardStack with ID: " + cardId);
         cardType = CardFactory.generate(cardId);
         int initAmount = cardType.getInitAmount();
         amountRemaining = initAmount;
 
-        System.out.println("Initialized stack of " + amountRemaining + " " + cardType.toString() + "'s\n");
+    }
+
+    public String toString() {
+        return cardType + " Qty: " + amountRemaining + " Price: " + cardType.getPrice();
+    }
+
+    public Card getCardType() {
+        return cardType;
+    }
+
+    public Card getCard() {
+        amountRemaining--;
+        return CardFactory.generate(cardType.getId());
     }
 }

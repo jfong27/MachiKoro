@@ -18,6 +18,9 @@ public class Ranch extends PrimaryIndustry {
     }
 
     @Override
+    public CardIcon getIcon() { return ICON; }
+
+    @Override
     public boolean isActivated(int rollNumber) {
         return rollNumber == ACTIVATION_NUM;
     }

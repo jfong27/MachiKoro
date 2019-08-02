@@ -24,6 +24,9 @@ public class AppleOrchard extends PrimaryIndustry {
     @Override
     public int getPayout() { return PAYOUT; }
 
+    @Override
+    public CardIcon getIcon() { return ICON; }
+
     public String toString() {
         return "Apple Orchard";
     }

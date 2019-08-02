@@ -21,5 +21,6 @@ public class TrainStation extends Landmark {
       return true;
    }
 
+   public String toString() { return "Train Station"; }
 }
 

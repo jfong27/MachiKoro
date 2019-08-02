@@ -5,4 +5,5 @@ public abstract class Restaurant implements Card {
         return 6;
     }
     public int coinsToSteal() { return 1; }
+    public CardIcon getIcon() { return CardIcon.CUP; }
 }
