@@ -18,7 +18,7 @@ public class Bakery extends SecondaryIndustry {
     public CardIcon getIcon() { return ICON; }
 
     public boolean isActivated(int rollNumber) {
-        return rollNumber == 1 || rollNumber == 2;
+        return rollNumber == 2 || rollNumber == 3;
     }
 
     public String toString() {

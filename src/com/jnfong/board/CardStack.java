@@ -27,4 +27,6 @@ public class CardStack {
         amountRemaining--;
         return CardFactory.generate(cardType.getId());
     }
+
+    public int getQuantity() { return amountRemaining; }
 }

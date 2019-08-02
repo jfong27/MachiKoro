@@ -43,13 +43,12 @@ public class Game {
     }
 
     /*
-     * TODO: To see all activated cards, go through all opponents and see which red cards take effect (order matters).
-     *       Pay all debts, then go through all opponents and pay from bank for all activated blue cards.
-     *       Finally, check all blue, green, and purple cards for the current player.
+     * TODO: Have landmarks take effect
      */
     public void playGame() {
         Player currPlayer;
         Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
         int playerTurn = 0;
         int roll;
 
@@ -58,21 +57,26 @@ public class Game {
         while (true) {
             System.out.println("\nPlayer " + playerTurn + "'s turn");
             currPlayer = players[playerTurn];
+            System.out.println(currPlayer.getNumCoins());
             roll = random.nextInt(6) + 1;
 
             if (currPlayer.hasTrainStation()) {
                 System.out.println("Would you like to roll 1 or 2 dice?");
-                roll += 0; // TODO: Change to actual roll
+                if (scanner.nextInt() == 2) {
+                    roll += random.nextInt(6) + 1;
+                }
             }
             System.out.println("Player " + playerTurn + " rolled a " + roll);
             activateCards(playerTurn, roll);
             allowPurchase(currPlayer);
+            if (currPlayer.hasWon()) {
+                System.out.println(currPlayer.toString() + " has won!");
+                break;
+            }
 
             playerTurn += 1;
             if (playerTurn == numPlayers) { playerTurn = 0; }
             count += 1;
-
-            if (count > 5) { break; }
         }
     }
 
@@ -129,6 +133,7 @@ public class Game {
         }
     }
 
+    //TODO: Allow purchase of Landmarks
     private void allowPurchase(Player player) {
 
         System.out.println(String.format("%s: %d coins", player.toString(), player.getNumCoins()));
@@ -136,22 +141,50 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         String ans = scanner.next();
 
-        int i = 0;
-        int purchaseId;
         if (ans.toLowerCase().charAt(0) == 'y') {
-            for (CardStack cardStack : cardStacks) {
-                System.out.print(i++ + " - ");
+            makePurchase(player);
+
+        }
+
+    }
+
+    private void makePurchase(Player player) {
+        int purchaseId;
+        int i = 0;
+        Scanner scanner = new Scanner(System.in);
+
+        for (CardStack cardStack : cardStacks) {
+            if (cardStack.getQuantity() > 0) {
+                System.out.print(i + " - ");
                 System.out.println(cardStack.toString());
             }
-            System.out.print(">> ");
-            purchaseId = scanner.nextInt();
+            i++;
+        }
+
+        if (!player.hasTrainStation()) {
+            System.out.println("15 - Train Station Price: 4");
+        }
+        if (!player.hasShoppingMall()) {
+            System.out.println("16 - Train Station Price: 10");
+        }
+        if (!player.hasAmusementPark()) {
+            System.out.println("17 - Train Station Price: 16");
+        }
+        if (!player.hasRadioTower()) {
+            System.out.println("18 - Train Station Price: 22");
+        }
+
+        System.out.print(">> ");
+        purchaseId = scanner.nextInt();
+        if (purchaseId < 15) {
             if (player.getNumCoins() >= cardStacks[purchaseId].getCardType().getPrice()) {
                 Card newCard = cardStacks[purchaseId].getCard();
                 player.giveCard(newCard);
                 player.takeCoins(newCard.getPrice());
             }
+        } else if (purchaseId < 19) {
+            player.buildLandmark(purchaseId);
         }
-
     }
 
 }

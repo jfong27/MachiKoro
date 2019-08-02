@@ -73,6 +73,46 @@ public class Player {
       return landmarks[3];
    }
 
+   public boolean hasWon() {
+      for (boolean bool : landmarks) {
+         if (!bool) { return false;}
+      }
+      return true;
+   }
+
+   public void buildLandmark(int purchaseId) {
+      switch (purchaseId) {
+         case 15:
+            if (coins >= 4) {
+               System.out.println("Built Train Station!");
+               landmarks[0] = true;
+               coins -= 4;
+            }
+            break;
+         case 16:
+            if (coins >= 10) {
+               System.out.println("Built Shopping Mall!");
+               landmarks[1] = true;
+               coins -= 10;
+            }
+            break;
+         case 17:
+            if (coins >= 16) {
+               System.out.println("Built Amusement Park!");
+               landmarks[2] = true;
+               coins -= 16;
+            }
+            break;
+         case 18:
+            if (coins >= 22) {
+               System.out.println("Built Amusement Park!");
+               landmarks[3] = true;
+               coins -= 22;
+            }
+            break;
+      }
+   }
+
    public int activateRed(int roll) {
 
       int coinsToSteal = 0;
@@ -90,9 +130,11 @@ public class Player {
    public void activateBlue(int roll) {
       for (PrimaryIndustry card : blueCards) {
          if (card.isActivated(roll)) {
-            System.out.println(String.format("%s gets %d coins because of %s",
+            System.out.println(coins);
+            System.out.println(String.format("%s gets %d coins from %s",
                                              this.toString(), card.getPayout(), card.toString()));
             coins += card.getPayout();
+            System.out.println(coins);
          }
       }
    }
@@ -100,6 +142,8 @@ public class Player {
    public void activateGreen(int roll) {
       for (SecondaryIndustry card : greenCards) {
          if (card.isActivated(roll)) {
+            System.out.println(String.format("%s gets %d coins from %s",
+                                             this.toString(), card.getPayout(blueCards), card.toString()));
             coins += card.getPayout(blueCards);
          }
       }
