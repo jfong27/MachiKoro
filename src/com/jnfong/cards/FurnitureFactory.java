@@ -1,5 +1,7 @@
 package com.jnfong.cards;
 
+import com.jnfong.player.Player;
+
 import java.util.List;
 
 public class FurnitureFactory extends SecondaryIndustry {
@@ -20,7 +22,7 @@ public class FurnitureFactory extends SecondaryIndustry {
     public CardIcon getIcon() { return ICON; }
 
     @Override
-    public int getPayout(List<PrimaryIndustry> blues) {
+    public int getPayout(List<PrimaryIndustry> blues, Player player) {
         int numGears = 0;
 
         for (PrimaryIndustry card : blues) {

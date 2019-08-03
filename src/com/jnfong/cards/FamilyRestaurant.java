@@ -1,5 +1,7 @@
 package com.jnfong.cards;
 
+import com.jnfong.player.Player;
+
 public class FamilyRestaurant extends Restaurant {
 
     private static final int PRICE = 3;
@@ -24,7 +26,12 @@ public class FamilyRestaurant extends Restaurant {
     }
 
     @Override
-    public int coinsToSteal() { return COINS_TO_STEAL; }
+    public int coinsToSteal(Player player) {
+        if (player.hasShoppingMall()) {
+            return COINS_TO_STEAL + 1;
+        }
+        return COINS_TO_STEAL;
+    }
 
     public String toString() {
         return "Family Restaurant";

@@ -1,5 +1,7 @@
 package com.jnfong.cards;
 
+import com.jnfong.player.Player;
+
 import java.util.List;
 
 public class ConvenienceStore extends SecondaryIndustry {
@@ -22,7 +24,12 @@ public class ConvenienceStore extends SecondaryIndustry {
     public CardIcon getIcon() { return ICON; }
 
     @Override
-    public int getPayout(List<PrimaryIndustry> blues) { return PAYOUT; }
+    public int getPayout(List<PrimaryIndustry> blues, Player player) {
+        if (player.hasShoppingMall()) {
+            return PAYOUT + 1;
+        }
+        return PAYOUT;
+    }
 
     public boolean isActivated(int rollNumber) {
         return rollNumber == ACTIVATION_NUM;

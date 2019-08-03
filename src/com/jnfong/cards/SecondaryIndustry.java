@@ -1,5 +1,7 @@
 package com.jnfong.cards;
 
+import com.jnfong.player.Player;
+
 import java.util.List;
 
 public abstract class SecondaryIndustry implements Card {
@@ -8,7 +10,7 @@ public abstract class SecondaryIndustry implements Card {
         return 6;
     }
 
-    public int getPayout(List<PrimaryIndustry> blues) {
+    public int getPayout(List<PrimaryIndustry> blues, Player player) {
         return 1;
     }
 }

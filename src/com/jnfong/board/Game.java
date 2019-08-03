@@ -42,31 +42,23 @@ public class Game {
 
     }
 
-    /*
-     * TODO: Have landmarks take effect
-     */
     public void playGame() {
         Player currPlayer;
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-        int playerTurn = 0;
-        int roll;
 
-        int count = 0;
+        int playerTurn = 0;
+        int[] rolls;
+        int roll;
 
         while (true) {
             System.out.println("\nPlayer " + playerTurn + "'s turn");
             currPlayer = players[playerTurn];
-            System.out.println(currPlayer.getNumCoins());
-            roll = random.nextInt(6) + 1;
+            rolls = rollDice(currPlayer, true);
 
-            if (currPlayer.hasTrainStation()) {
-                System.out.println("Would you like to roll 1 or 2 dice?");
-                if (scanner.nextInt() == 2) {
-                    roll += random.nextInt(6) + 1;
-                }
+            if (rolls[1] > -1) {
+                roll = rolls[0] + rolls[1];
+            } else {
+                roll = rolls[0];
             }
-            System.out.println("Player " + playerTurn + " rolled a " + roll);
             activateCards(playerTurn, roll);
             allowPurchase(currPlayer);
             if (currPlayer.hasWon()) {
@@ -75,9 +67,44 @@ public class Game {
             }
 
             playerTurn += 1;
+            if (currPlayer.hasAmusementPark() && rolls[0] == rolls[1]) {
+                playerTurn -= 1;
+                System.out.println(currPlayer.toString() + " gets another turn for rolling doubles" +
+                                                           " and having an Amusement Park");
+            }
             if (playerTurn == numPlayers) { playerTurn = 0; }
-            count += 1;
         }
+    }
+
+    private int[] rollDice(Player player, boolean isFirstRoll) {
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
+        int[] rolls = new int[2];
+        rolls[0] = random.nextInt(6) + 1;
+        rolls[1] = -1;
+
+        if (player.hasTrainStation()) {
+            System.out.println("Would you like to roll 1 or 2 dice?");
+            if (scanner.nextInt() == 2) {
+                System.out.println(player.toString() + " rolled a " + rolls[0] + " and " + rolls[1]);
+                rolls[1] = random.nextInt(6) + 1;
+            } else {
+                System.out.println(player.toString() + " rolled a " + rolls[0]);
+            }
+        } else {
+            System.out.println(player.toString() + " rolled a " + rolls[0]);
+        }
+
+        if (isFirstRoll && player.hasRadioTower()) {
+            System.out.println("Would you like to reroll? (y/n)");
+            System.out.print(">> ");
+            char ans = scanner.next().toLowerCase().charAt(0);
+            if (ans == 'y') {
+                return rollDice(player, false);
+            }
+        }
+
+        return rolls;
     }
 
     private void activateCards(int currPlayerIndex, int roll) {
@@ -161,18 +188,7 @@ public class Game {
             i++;
         }
 
-        if (!player.hasTrainStation()) {
-            System.out.println("15 - Train Station Price: 4");
-        }
-        if (!player.hasShoppingMall()) {
-            System.out.println("16 - Train Station Price: 10");
-        }
-        if (!player.hasAmusementPark()) {
-            System.out.println("17 - Train Station Price: 16");
-        }
-        if (!player.hasRadioTower()) {
-            System.out.println("18 - Train Station Price: 22");
-        }
+        printLandmarks(player);
 
         System.out.print(">> ");
         purchaseId = scanner.nextInt();
@@ -181,9 +197,27 @@ public class Game {
                 Card newCard = cardStacks[purchaseId].getCard();
                 player.giveCard(newCard);
                 player.takeCoins(newCard.getPrice());
+            } else {
+                System.out.println("You dont have enough coin");
             }
         } else if (purchaseId < 19) {
             player.buildLandmark(purchaseId);
+        }
+    }
+
+    private void printLandmarks(Player player) {
+
+        if (!player.hasTrainStation()) {
+            System.out.println("15 - Train Station Price: 4");
+        }
+        if (!player.hasShoppingMall()) {
+            System.out.println("16 - Shopping Mall Price: 10");
+        }
+        if (!player.hasAmusementPark()) {
+            System.out.println("17 - Amusement Park Price: 16");
+        }
+        if (!player.hasRadioTower()) {
+            System.out.println("18 - Radio Tower Price: 22");
         }
     }
 

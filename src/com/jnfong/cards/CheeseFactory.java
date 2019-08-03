@@ -1,5 +1,7 @@
 package com.jnfong.cards;
 
+import com.jnfong.player.Player;
+
 import java.util.List;
 
 public class CheeseFactory extends SecondaryIndustry {
@@ -22,7 +24,7 @@ public class CheeseFactory extends SecondaryIndustry {
 
     // Payout is 3 coins for every Cow icon card owned.
     @Override
-    public int getPayout(List<PrimaryIndustry> blues) {
+    public int getPayout(List<PrimaryIndustry> blues, Player player) {
         int numCows = 0;
 
         for (PrimaryIndustry card : blues) {

@@ -87,6 +87,8 @@ public class Player {
                System.out.println("Built Train Station!");
                landmarks[0] = true;
                coins -= 4;
+            } else {
+               System.out.println("You don't have enough coin!");
             }
             break;
          case 16:
@@ -94,6 +96,8 @@ public class Player {
                System.out.println("Built Shopping Mall!");
                landmarks[1] = true;
                coins -= 10;
+            } else {
+               System.out.println("You don't have enough coin!");
             }
             break;
          case 17:
@@ -101,6 +105,8 @@ public class Player {
                System.out.println("Built Amusement Park!");
                landmarks[2] = true;
                coins -= 16;
+            } else {
+               System.out.println("You don't have enough coin!");
             }
             break;
          case 18:
@@ -108,6 +114,8 @@ public class Player {
                System.out.println("Built Amusement Park!");
                landmarks[3] = true;
                coins -= 22;
+            } else {
+               System.out.println("You don't have enough coin!");
             }
             break;
       }
@@ -119,7 +127,7 @@ public class Player {
 
       for (Restaurant restaurant : redCards) {
          if (restaurant.isActivated(roll)) {
-            coinsToSteal += restaurant.coinsToSteal();
+            coinsToSteal += restaurant.coinsToSteal(this);
          }
       }
 
@@ -130,11 +138,9 @@ public class Player {
    public void activateBlue(int roll) {
       for (PrimaryIndustry card : blueCards) {
          if (card.isActivated(roll)) {
-            System.out.println(coins);
             System.out.println(String.format("%s gets %d coins from %s",
                                              this.toString(), card.getPayout(), card.toString()));
             coins += card.getPayout();
-            System.out.println(coins);
          }
       }
    }
@@ -143,8 +149,8 @@ public class Player {
       for (SecondaryIndustry card : greenCards) {
          if (card.isActivated(roll)) {
             System.out.println(String.format("%s gets %d coins from %s",
-                                             this.toString(), card.getPayout(blueCards), card.toString()));
-            coins += card.getPayout(blueCards);
+                                             this.toString(), card.getPayout(blueCards, this), card.toString()));
+            coins += card.getPayout(blueCards, this);
          }
       }
    }
